@@ -13,6 +13,7 @@ public final class Config {
     /* Model to save configurations for the file picker */
 
     private boolean selectMultiple;
+    private int maxFiles;
     private String rootDir;
     private boolean showHidden;
     private ArrayList<String> extensionFilters;
@@ -44,6 +45,7 @@ public final class Config {
     }
 
     private void reset(){
+        maxFiles = -1;
         selectMultiple = false;
         rootDir = null;
         showHidden = false;
@@ -103,8 +105,16 @@ public final class Config {
         return selectMultiple;
     }
 
+    public int maxFiles() {
+        return maxFiles;
+    }
+
     public void setSelectMultiple(boolean selectMultiple) {
         this.selectMultiple = selectMultiple;
+    }
+
+    public void setMaxFiles(int maxFiles) {
+        this.maxFiles = maxFiles;
     }
 
     public String getRootDir() {

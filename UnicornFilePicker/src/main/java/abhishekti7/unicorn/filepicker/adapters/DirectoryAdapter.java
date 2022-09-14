@@ -12,16 +12,19 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import abhishekti7.unicorn.filepicker.R;
 import abhishekti7.unicorn.filepicker.models.Config;
 import abhishekti7.unicorn.filepicker.models.DirectoryModel;
+import abhishekti7.unicorn.filepicker.ui.FilePickerActivity;
 import abhishekti7.unicorn.filepicker.utils.Utils;
 
 
@@ -112,6 +115,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        DirectoryModel dm = filesListFiltered.get(position);
         if (filesListFiltered.get(position).isDirectory()) {
             holder.tv_folder_name.setText(filesListFiltered.get(position).getName());
             holder.tv_num_files.setText(filesListFiltered.get(position).getNum_files() + " files");
@@ -121,7 +125,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
 
         if (!filesListFiltered.get(position).isDirectory()) {
             changeFileIcon(holder, filesListFiltered.get(position).getName());
-            if (selected.contains(String.valueOf(position))) {
+            if (selected.contains(dm.getPath())) {
                 holder.rl_file_root.setBackgroundColor(this.selectionTint);
                 holder.rg_selected.setVisibility(View.VISIBLE);
             } else {
@@ -132,32 +136,37 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
 
         holder.tv_date.setText(Utils.longToReadableDate(filesListFiltered.get(position).getLast_modif_time()));
         holder.itemView.setOnClickListener((v) -> {
+            DirectoryModel dmLocal = filesListFiltered.get(position);
+
             if (filesListFiltered.get(position).isDirectory()) {
                 onFilesClickListener.onClicked(filesListFiltered.get(position));
             } else {
                 if (config.isSelectMultiple()) {
-                    if (selected.contains(String.valueOf(position))) {
-                        selected.remove(String.valueOf(position));
+                    if (selected.contains(dmLocal.getPath())) {
+                        selected.remove(dmLocal.getPath());
                         holder.rg_selected.setVisibility(View.GONE);
                         holder.rl_file_root.setBackgroundColor(this.backgroundTint);
+                    } else if (selected.size() >= config.maxFiles()) {
+                        String errorMsg = context.getResources().getQuantityString(R.plurals.unicorn_max_file, config.maxFiles(), config.maxFiles());
+                        Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show();
                     } else {
-                        selected.add(String.valueOf(position));
+                        selected.add(dmLocal.getPath());
                         holder.rg_selected.setVisibility(View.VISIBLE);
                         holder.rl_file_root.setBackgroundColor(this.selectionTint);
                     }
                 } else {
                     /* if selection is empty, add the current item */
                     if (selected.size()==0) {
-                        selected.add(0, String.valueOf(position));
+                        selected.add(0, dmLocal.getPath());
                     }
                     /* if item already selected then remove it */
-                    else if (selected.get(0).equals(String.valueOf(position))) {
+                    else if (selected.get(0).equals(dmLocal.getPath())) {
                         selected.remove(0);
                     }
                     /* if another item selected, then remove and then add current item */
                     else{
                         selected.remove(0);
-                        selected.add(0, String.valueOf(position));
+                        selected.add(0, dmLocal.getPath());
                     }
                 }
                 notifyDataSetChanged();

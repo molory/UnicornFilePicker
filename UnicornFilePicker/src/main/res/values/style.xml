@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/unicorn_colorPrimaryDark</item>
         <item name="colorAccent">@color/unicorn_colorAccent</item>
 
-        <item name="android:statusBarColor">@color/unicorn_colorAccent</item>
+        <item name="android:statusBarColor">@color/unicorn_colorPrimaryDark</item>
         <item name="android:windowBackground">@color/unicorn_colorPrimary</item>
         <item name="android:navigationBarColor">@color/unicorn_colorPrimaryDark</item>
 
@@ -33,9 +33,9 @@
         <item name="colorPrimaryDark">@color/unicorn_colorPrimaryDark</item>
         <item name="colorAccent">@color/unicorn_white</item>
 
-        <item name="android:statusBarColor">@color/unicorn_colorAccent</item>
+        <item name="android:statusBarColor">@color/unicorn_colorPrimaryDark</item>
         <item name="android:windowBackground">@color/unicorn_white</item>
-        <item name="android:navigationBarColor">@color/unicorn_white</item>
+        <item name="android:navigationBarColor">@color/unicorn_colorPrimaryDark</item>
 
         <!-- textColorPrimary is for toolbar title text  -->
         <item name="android:textColorPrimary">@color/unicorn_white</item>

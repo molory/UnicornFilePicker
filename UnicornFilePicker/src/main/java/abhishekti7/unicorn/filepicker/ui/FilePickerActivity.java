@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -142,7 +143,10 @@ public class FilePickerActivity extends AppCompatActivity {
                 if(config.isSelectMultiple()){
                     if(selected_files.contains(fileModel.getPath())){
                         selected_files.remove(fileModel.getPath());
-                    }else{
+                    } else if (selected_files.size() >= config.maxFiles()) {
+                        String errorMsg = FilePickerActivity.this.getResources().getQuantityString(R.plurals.unicorn_max_file, config.maxFiles(), config.maxFiles());
+                        Toast.makeText(FilePickerActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+                    } else{
                         selected_files.add(fileModel.getPath());
                     }
                 }else{

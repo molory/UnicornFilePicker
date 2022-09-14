@@ -20,6 +20,7 @@ public final class ConfigBuilder {
     private String rootDir;
     private boolean showHidden = false;
     private boolean selectMultiple = false;
+    private int maxFiles = -1;
     private boolean addDivider = false;
     private boolean showOnlyDir = false;
 
@@ -50,6 +51,11 @@ public final class ConfigBuilder {
         return this;
     }
 
+    public ConfigBuilder maxFiles(int max){
+        this.maxFiles = max;
+        return this;
+    }
+
     public ConfigBuilder setFilters(String[] filters){
         this.extensionFilters = new ArrayList<>(Arrays.asList(filters));
         return this;
@@ -73,6 +79,7 @@ public final class ConfigBuilder {
     public UnicornFilePicker build(){
         config.setRootDir(this.rootDir);
         config.setSelectMultiple(this.selectMultiple);
+        config.setMaxFiles(this.maxFiles);
         config.setShowHidden(this.showHidden);
         config.setExtensionFilters(this.extensionFilters);
         config.setAddItemDivider(this.addDivider);

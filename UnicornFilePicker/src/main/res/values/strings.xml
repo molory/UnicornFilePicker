@@ -1,4 +1,9 @@
 <resources>
     <string name="unicorn_search">Search</string>
     <string name="unicorn_no_files">No files</string>
+    <plurals name="unicorn_max_file">
+        <item quantity="one" formatted="true">You cannot select more than %1$d file</item>
+        <item quantity="many" formatted="true">You cannot select more than %1$d files</item>
+        <item quantity="other" formatted="true">You cannot select more than %1$d files</item>
+    </plurals>
 </resources>
